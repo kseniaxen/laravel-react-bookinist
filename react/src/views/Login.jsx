@@ -7,17 +7,16 @@ export default function Login() {
     }
 
     return (
-        <div className="d-flex justify-content-center mt-5">
-            <form className="row col-lg-3 col-8" onSubmit={onSubmit}>
-                <input type="email" className="form-control mb-3" id="email" placeholder="Email" required />
-                <input type="password" className="form-control mb-3" id="password" placeholder="Пароль" required />
-                <button className="btn btn-success mb-1">
-                    Вiйти
-                </button>
-                <p className="message">
-                    Не зареєстровані? <Link to="/signup">Створити аккаунт</Link>
-                </p>
-            </form>
-        </div>
+        <form className="row col-lg-3 col-8 border rounded p-3" onSubmit={onSubmit}>
+            <h2 className="text-center">Увiйти в профiль</h2>
+            <input type="email" className="form-control mb-3" id="email" placeholder="Email" required />
+            <input type="password" className="form-control mb-3" id="password" placeholder="Пароль" required />
+            <button className="btn btn-success mb-1">
+                Вiйти
+            </button>
+            <p className="message">
+                Не зареєстровані? <Link to="/signup">Створити аккаунт</Link>
+            </p>
+        </form>
     )
 }

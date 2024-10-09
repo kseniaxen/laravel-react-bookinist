@@ -3,15 +3,17 @@ import { useStateContext } from "../contexts/ContextProvider";
 import NavigationLayout from "./NavigationLayout";
 
 export default function GuestLayout() {
-    const {token} = useStateContext()
+    const { token } = useStateContext()
 
-    if(token){
-        return <Navigate to="/"/> 
+    if (token) {
+        return <Navigate to="/" />
     }
     return (
         <div>
             <NavigationLayout />
-            <Outlet/>
+            <div className="d-flex justify-content-center mt-5">
+                <Outlet />
+            </div>
         </div>
     )
 }

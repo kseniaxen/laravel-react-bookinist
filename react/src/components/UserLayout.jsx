@@ -1,8 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
+import NavigationLayout from "./NavigationLayout";
 
 export default function UserLayout() {
-    const {user, token} = useStateContext()
+    const {user, token, setUser, setToken} = useStateContext();
 
     if(!token){
         return <Navigate to="/login"/>
@@ -10,7 +11,7 @@ export default function UserLayout() {
     
     return (
         <div>
-            Only for user
+            <NavigationLayout />
             <Outlet/>
         </div>
     )

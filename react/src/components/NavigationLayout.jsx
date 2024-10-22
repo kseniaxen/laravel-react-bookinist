@@ -7,7 +7,7 @@ import axiosClient from "../axios-client";
 
 export default function NavigationLayout() {
     const { user, token, setUser, setToken } = useStateContext();
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const onLogout = (e) => {
         e.preventDefault();
@@ -19,12 +19,14 @@ export default function NavigationLayout() {
     }
 
     useEffect(() => {
-        setIsLoading(true);
-        axiosClient.get('/user')
-            .then(({ data }) => {
-                setIsLoading(false);
-                setUser(data)
-            })
+        if (localStorage.getItem('ACCESS_TOKEN')) {
+            setLoading(true);
+            axiosClient.get('/user')
+                .then(({ data }) => {
+                    setLoading(false);
+                    setUser(data.data);
+                })
+        }
     }, []);
 
     return (
@@ -69,12 +71,12 @@ export default function NavigationLayout() {
                                     className="d-flex">
                                     <i style={{ color: "black", fontSize: "2rem" }} className="bi bi-person-circle"></i>
                                     {
-                                        isLoading ? <p class="placeholder-glow d-flex align-items-center px-2 m-0">
-                                                        <span class="placeholder">Loading</span>
-                                                    </p>:
-                                                    <div className="d-flex align-items-center">
-                                                        <p className="px-2 m-0">{user.name}</p>
-                                                    </div>
+                                        loading ? <p class="placeholder-wave d-flex align-items-center px-2 m-0">
+                                            <span class="placeholder">............................</span>
+                                        </p> :
+                                            <div className="d-flex align-items-center">
+                                                <p className="px-2 m-0">{user.name}</p>
+                                            </div>
                                     }
                                 </Nav.Link>
                             </Col>

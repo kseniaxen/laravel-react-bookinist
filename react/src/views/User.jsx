@@ -65,6 +65,7 @@ export default function User() {
 
     const changeImage = (ev) => {
         const files = ev.currentTarget.files;
+        console.log(files)
         if (files) {
             const file = files[0]
             if (file) {
@@ -82,6 +83,7 @@ export default function User() {
         axiosClient.put(`/user/${userUpdate.id}`, userUpdate)
             .then((data) => {
                 getUser(data);
+                setUserUpdate({});
                 handleClose();
             })
             .catch(err => {
@@ -89,8 +91,11 @@ export default function User() {
                 if (response && response.status === 422) {
                     setErrors(response.data.errors);
                 }
-                console.log(response);
             })
+    }
+
+    const deleteImage = () => {
+        setUserUpdate({ ...userUpdate, image: "" });
     }
 
     return (
@@ -99,7 +104,7 @@ export default function User() {
                 {
                     !loading &&
                     <Col md={3} className="d-flex flex-column">
-                        <Image src={user.image ? user.image : NoImage} roundedCircle className="mb-3" />
+                        <Image src={user.image ? user.image : NoImage} className="mb-3" />
                         <div className="d-flex flex-row">
                             <h2>{user.name}</h2>
                             <div className="d-flex flex-column mb-3">
@@ -126,11 +131,19 @@ export default function User() {
                                 ))}
                             </div>
                         }
+                        <div className="d-flex flex-column">
+                            <Image src={userUpdate.image} className="img-fluid"></Image>
+                            {
+                                userUpdate.image && <button className="btn btn-danger my-2" onClick={deleteImage}>Удалить картинку</button>
+                            }
+                        </div>
                         <form onSubmit={onSubmit}>
-                            <img src={userUpdate.image}></img>
-                            <div class="input-group mb-3">
-                                <input type="file" src={userUpdate.image} onChange={ev => changeImage(ev)} accept="image/png, image/jpeg, image/png" class="form-control" id="inputGroupFile" />
-                            </div>
+                            {
+                                !userUpdate.image &&
+                                <div className="input-group mb-3">
+                                    <input type="file" src={userUpdate.image} onChange={ev => changeImage(ev)} accept="image/png, image/jpeg, image/png" class="form-control" id="inputGroupFile" />
+                                </div>
+                            }
                             <input type="text" value={userUpdate.name} onChange={ev => setUserUpdate({ ...userUpdate, name: ev.target.value })} className="form-control mb-3" placeholder="Ваше ім'я" />
                             <input type="email" value={userUpdate.email} onChange={ev => setUserUpdate({ ...userUpdate, email: ev.target.value })} className="form-control mb-3" placeholder="Email" />
                             <input type="password" onChange={ev => setUserUpdate({ ...userUpdate, password: ev.target.value })} className="form-control mb-3" placeholder="Пароль" />

@@ -5,12 +5,17 @@ import User from './views/User';
 import UserLayout from './components/UserLayout';
 import NotFound from './views/NotFound';
 import Main from './views/Main';
+import FAQ from './views/FAQ';
 import GuestLayout from './components/GuestLayout';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main />
+    },
+    {
+        path: '/faq',
+        element: <FAQ />
     },
     {
         path: '/user',

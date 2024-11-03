@@ -31,10 +31,11 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     * show(User $user)
      */
-    public function show(User $user)
+    public function show()
     {
-        return new UserResource($user);
+        return new UserResource(Auth::user());
     }
 
     /**

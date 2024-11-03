@@ -41,26 +41,36 @@ export default function NavigationLayout() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto fs-5">
                         <Nav.Link
+                            className="fw-normal"
                             as={Link}
                             to="/catalog">
                             Каталог
                         </Nav.Link>
                         <Nav.Link
+                            className="fw-normal"
                             as={Link}
                             to="/reviews">
                             Відгуки
                         </Nav.Link>
                         <Nav.Link
+                            className="fw-normal"
+                            as={Link}
+                            to="/about">
+                            Про нас
+                        </Nav.Link>
+                        <Nav.Link
+                            className="fw-normal"
                             as={Link}
                             to="/faq">
                             FAQ
                         </Nav.Link>
                         <Nav.Link
+                            className="fw-normal"
                             as={Link}
                             to="/contacts">
                             Контакти
                         </Nav.Link>
-                        {!token ? <Nav.Link as={Link} to="/login"> Вхiд </Nav.Link> : <Nav.Link as={Link} href="#" onClick={onLogout}>Вихiд</Nav.Link>}
+                        {!token ? <Nav.Link className="fw-normal" as={Link} to="/login"> Вхiд </Nav.Link> : <Nav.Link className="fw-normal" as={Link} href="#" onClick={onLogout}>Вихiд</Nav.Link>}
                     </Nav>
                     {token &&
                         <Row>
@@ -75,7 +85,7 @@ export default function NavigationLayout() {
                                             <span class="placeholder">............................</span>
                                         </p> :
                                             <div className="d-flex align-items-center">
-                                                <p className="px-2 m-0">{user.name}</p>
+                                                <p className="px-2 m-0 fw-normal">{user.name}</p>
                                             </div>
                                     }
                                 </Nav.Link>

@@ -12,7 +12,7 @@ export default function FAQ() {
                         Часті запитання
                     </h1>
                 </Row>
-                <Row className="pb-5 mb-5">
+                <Row className="pb-5 mb-lg-5">
                     <Accordion>
                         <Accordion.Item eventKey="0" className="faq-accordion">
                             <Accordion.Header>

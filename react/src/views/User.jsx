@@ -105,7 +105,7 @@ export default function User() {
                     !loading &&
                     <Col md={3} className="d-flex flex-column">
                         <Image src={user.image ? user.image : NoImage} className="mb-3" />
-                        <div className="d-flex flex-row">
+                        <div className="d-flex flex-row justify-content-between">
                             <h2>{user.name}</h2>
                             <div className="d-flex flex-column mb-3">
                                 <Badge bg="primary d-flex align-items-center">

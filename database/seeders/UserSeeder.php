@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('users')->insert([
-            'name' => 'ksenia',
+            'name' => 'Ксения Сердюк',
             'email' => 'ksenia@ksenia.com',
             'role_name' => 'ROLE_USER',
             'password' => Hash::make('K123456!'),

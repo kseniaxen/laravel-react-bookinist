@@ -7,6 +7,9 @@ import NotFound from './views/NotFound';
 import Main from './views/Main';
 import FAQ from './views/FAQ';
 import GuestLayout from './components/GuestLayout';
+import Catalog from './views/Catalog';
+import Book from './views/Book';
+import Contacts from './views/Contacts';
 
 const router = createBrowserRouter([
     {
@@ -14,8 +17,20 @@ const router = createBrowserRouter([
         element: <Main />
     },
     {
+        path: '/catalog',
+        element: <Catalog />
+    },
+    {
         path: '/faq',
         element: <FAQ />
+    },
+    {
+        path: '/contacts',
+        element: <Contacts />
+    },
+    {
+        path: '/books/:id',
+        element: <Book />
     },
     {
         path: '/user',

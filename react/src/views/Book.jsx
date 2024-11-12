@@ -1,0 +1,69 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axiosClient from "../axios-client.js";
+
+import NavigationLayout from "../components/NavigationLayout";
+import FooterLayout from "../components/FooterLayout";
+import { Container, Row, Col, Image } from "react-bootstrap";
+
+export default function Book() {
+    let { id } = useParams();
+
+    const [book, setBook] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    if (id) {
+        useEffect(() => {
+            setLoading(true);
+            axiosClient.get(`/books/${id}`)
+                .then(({ data }) => {
+                    setLoading(false)
+                    setBook(data.data)
+                })
+                .catch(() => {
+                    setLoading(false)
+                })
+        }, [])
+    }
+
+
+    return (
+        <div className="d-flex flex-column min-vh-100">
+            <NavigationLayout />
+            <Container className="my-lg-5 py-lg-5">
+                {
+                    loading ? <Row>
+                        <Col className="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </Col>
+                    </Row>
+                        : <Row>
+                            <Col lg={3} className="text-center pb-4">
+                                <Image className="w-75" src={book.image_path} />
+                            </Col>
+                            <Col>
+                                <div className="d-flex">
+                                    <h3 className="price d-flex">
+                                        {book.price} ₴
+                                    </h3>
+                                </div>
+                                <h1 className="title">{book.author}. {book.title}</h1>
+                                {book.year && <h4 className="title">{book.year} рiк</h4>}
+                                {book.publish && <h4 className="title">{book.publish}</h4>}
+                                <p>{book.description}</p>
+                                <h5 className="py-2">Мiсто: {book.city}</h5>
+                                <h5 className="pb-3">Продавець:</h5>
+                                <div className="d-flex align-items-center">
+                                    {book.image_user && <Image src={book.image_user} className="book__user_image px-3" /> }
+                                    <h5>{book.user}</h5>
+                                </div>
+                            </Col>
+                        </Row>
+                }
+            </Container>
+            <FooterLayout />
+        </div>
+    )
+}

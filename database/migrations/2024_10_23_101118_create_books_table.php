@@ -17,7 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('cityId');
             $table->string('author');
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
+            $table->integer('year')->nullable();
+            $table->string('publish')->nullable();
             $table->decimal('price',15,2);
             $table->string('image_path')->nullable();
             $table->timestamps();

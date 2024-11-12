@@ -1,7 +1,11 @@
 import { Row, Col, Container, Image, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavigationLayout from "../components/NavigationLayout";
-import person from "../assets/img/person1.png";
+import person1 from "../assets/img/person1.png";
+import person2 from "../assets/img/person2.png";
+import person3 from "../assets/img/person3.png";
+import person4 from "../assets/img/person4.png";
+import person5 from "../assets/img/person5.png";
 import blog from "../assets/img/blog1.jpg";
 import FooterLayout from "../components/FooterLayout";
 
@@ -34,33 +38,33 @@ export default function Main() {
                     <Row xs={1} md={2} lg={5} className="d-flex justify-content-center">
                         <Col className="d-flex flex-column">
                             <div className="d-flex justify-content-center align-items-center">
-                                <Image className="mb-2 h-75 h-md-50" src={person} roundedCircle fluid />
+                                <Image className="mb-2 h-75 h-md-50" src={person1} roundedCircle fluid />
                             </div>
                             <p className="text-center fs-4 title">Олена Максименко</p>
                         </Col>
                         <Col className="d-flex flex-column">
                             <div className="d-flex justify-content-center align-items-center">
-                                <Image className="mb-2 h-75" src={person} roundedCircle fluid />
+                                <Image className="mb-2 h-75" src={person2} roundedCircle fluid />
                             </div>
-                            <p className="text-center fs-4 title">Олена Максименко</p>
+                            <p className="text-center fs-4 title">Оксана Красних</p>
                         </Col>
                         <Col className="d-flex flex-column">
                             <div className="d-flex justify-content-center align-items-center">
-                                <Image className="mb-2 h-75" src={person} roundedCircle fluid />
+                                <Image className="mb-2 h-75" src={person3} roundedCircle fluid />
                             </div>
-                            <p className="text-center fs-4 title">Олена Максименко</p>
+                            <p className="text-center fs-4 title">Діана Якимчук</p>
                         </Col>
                         <Col className="d-flex flex-column">
                             <div className="d-flex justify-content-center align-items-center">
-                                <Image className="mb-2 h-75" src={person} roundedCircle fluid />
+                                <Image className="mb-2 h-75" src={person4} roundedCircle fluid />
                             </div>
-                            <p className="text-center fs-4 title">Олена Максименко</p>
+                            <p className="text-center fs-4 title">Петро Назаров</p>
                         </Col>
                         <Col className="d-flex flex-column">
                             <div className="d-flex justify-content-center align-items-center">
-                                <Image className="mb-2 h-75" src={person} roundedCircle fluid />
+                                <Image className="mb-2 h-75" src={person5} roundedCircle fluid />
                             </div>
-                            <p className="text-center fs-4 title">Олена Максименко</p>
+                            <p className="text-center fs-4 title">Павло Петренко</p>
                         </Col>
                     </Row>
                 </Container>

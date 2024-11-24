@@ -15,7 +15,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        return CityResource::collection(City::query()->orderBy('id', 'desc'));
+        return CityResource::collection(City::query()->orderBy('id', 'desc')->get());
     }
 
     /**

@@ -9,17 +9,17 @@ export default function Contacts() {
             <Container className="py-5 my-lg-5">
                 <Row>
                     <Col>
-                        <h1 className="title text-center title__h2 py-5">
+                        <h1 className="title text-center title__h2 pb-3">
                             Контакти
                         </h1>
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="text-center">
+                    <Col className="text-center pb-3">
                         <p className="title fs-4">Якщо у вас виникли питання, зв'яжіться з нами будь-яким зручним для вас способом.</p>
                     </Col>
                 </Row>
-                <Row className="pb-5">
+                <Row className="pb-3">
                     <Col className="d-flex flex-md-row flex-column justify-content-center">
                         <div className="d-flex justify-content-center px-4">
                             <i style={{ color: "black", fontSize: "2rem" }} className="bi bi-telephone me-2"></i>

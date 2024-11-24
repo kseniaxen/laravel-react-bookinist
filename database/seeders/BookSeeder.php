@@ -13,7 +13,7 @@ class BookSeeder extends Seeder
     public function run(): void
     {
         DB::table('books')->insert([
-            'userId' => 3,
+            'userId' => 2,
             'cityId' => 1,
             'author' => "Соломко Анатолій",
             'title' => "Корсетна майстерня пані Марії",

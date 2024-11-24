@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Carousel } from "react-bootstrap";
 import NavigationLayout from "../components/NavigationLayout";
 import FooterLayout from "../components/FooterLayout";
 import { useEffect, useState } from "react";
@@ -25,6 +25,7 @@ export default function Catalog() {
                 setLoading(false)
                 setBooks(data.data)
                 setPagination(data.meta)
+                console.log(data.data)
             })
             .catch(() => {
                 setLoading(false)
@@ -34,7 +35,7 @@ export default function Catalog() {
     return (
         <div className="d-flex flex-column min-vh-100">
             <NavigationLayout />
-            <Container className="py-lg-5 mb-lg-5">
+            <Container>
                 <Row>
                     <Col>
                         <h1 className="title text-center title__h2 py-5">
@@ -42,7 +43,7 @@ export default function Catalog() {
                         </h1>
                     </Col>
                 </Row>
-                {loading ? <div className="d-flex justify-content-center">
+                {loading ? <div className="d-flex justify-content-center py-5">
                     <div class="spinner-border" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -52,7 +53,7 @@ export default function Catalog() {
                             return <Col className="pb-5">
                                 <Card className="book h-100">
                                     <div className="d-flex justify-content-center">
-                                        <Card.Img variant="top" className="w-50" /*style={{"min-height" : "250px"}}*/ src={book.image_path} />
+                                        <Card.Img variant="top" className="w-50" src={book.image_path[0]} />
                                     </div>
                                     <Card.Body className="d-flex flex-column justify-content-between">
                                         <Card.Title className="d-flex">

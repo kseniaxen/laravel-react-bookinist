@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import NavigationLayout from "./NavigationLayout";
+import FooterLayout from "./FooterLayout";
 
 export default function UserLayout() {
     const {user, token, setUser, setToken} = useStateContext();
@@ -13,6 +14,7 @@ export default function UserLayout() {
         <div>
             <NavigationLayout />
             <Outlet/>
+            <FooterLayout />
         </div>
     )
 }

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookResource;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -23,7 +26,20 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        //
+        $data = $request->validated();
+        $strImage = '';
+        if($request->hasFile('image_path')) {
+            foreach ($data['image_path'] as $image){
+                $uniqueName = Str::random(20) . '.' . $image->getClientOriginalExtension();
+                $strImage .= $uniqueName . ',';
+                $image->move(public_path('storage/images'), $uniqueName);
+            }
+        }
+        $data['image_path'] = $strImage;
+        $data['image_path'] = substr($strImage, 0, -1);
+        $book = Book::create($data);
+
+        return response(new BookResource($book), 201);
     }
 
     /**
@@ -32,6 +48,15 @@ class BookController extends Controller
     public function show(Book $book)
     {
         return new BookResource($book);
+    }
+
+    /**
+     * Display a listing of the resource auth user.
+     */
+    public function auth()
+    {
+        $books = DB::table('books')->where('userId', Auth::user()->id)->orderBy('id', 'desc')->get();
+        return BookResource::collection($books);
     }
 
     /**

@@ -10,6 +10,8 @@ import GuestLayout from './components/GuestLayout';
 import Catalog from './views/Catalog';
 import Book from './views/Book';
 import Contacts from './views/Contacts';
+import About from './views/About';
+import BookForm from './views/BookForm';
 
 const router = createBrowserRouter([
     {
@@ -19,6 +21,10 @@ const router = createBrowserRouter([
     {
         path: '/catalog',
         element: <Catalog />
+    },
+    {
+        path: '/about',
+        element: <About />
     },
     {
         path: '/faq',
@@ -31,6 +37,14 @@ const router = createBrowserRouter([
     {
         path: '/books/:id',
         element: <Book />
+    },
+    {
+        path: '/books/new',
+        element: <BookForm key="bookCreate" />
+    },
+    {
+        path: '/books/edit/:id',
+        element: <BookForm key="bookUpdate" />
     },
     {
         path: '/user',

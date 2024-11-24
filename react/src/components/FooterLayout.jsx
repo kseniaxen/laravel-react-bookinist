@@ -16,20 +16,17 @@ export default function FooterLayout() {
                         <Nav className="d-flex flex-column">
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/">
+                                href="/">
                                 Кошик
                             </Nav.Link>
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/catalog">
+                                href="/catalog">
                                 Каталог
                             </Nav.Link>
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/user">
+                                href="/user">
                                 Кабiнет
                             </Nav.Link>
                         </Nav>
@@ -39,32 +36,27 @@ export default function FooterLayout() {
                         <Nav className="d-flex flex-column">
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/about">
+                                href="/about">
                                 Про нас
                             </Nav.Link>
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/contacts">
+                                href="/contacts">
                                 Контакти
                             </Nav.Link>
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/blog">
+                                href="/blog">
                                 Наш блог
                             </Nav.Link>
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/faq">
+                                href="/faq">
                                 FAQ
                             </Nav.Link>
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                as={Link}
-                                to="/delivery">
+                                href="/delivery">
                                 Доставка
                             </Nav.Link>
                             <Nav.Link

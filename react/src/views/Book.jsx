@@ -4,7 +4,7 @@ import axiosClient from "../axios-client.js";
 
 import NavigationLayout from "../components/NavigationLayout";
 import FooterLayout from "../components/FooterLayout";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Carousel } from "react-bootstrap";
 
 export default function Book() {
     let { id } = useParams();
@@ -19,6 +19,7 @@ export default function Book() {
                 .then(({ data }) => {
                     setLoading(false)
                     setBook(data.data)
+                    console.log(data.data)
                 })
                 .catch(() => {
                     setLoading(false)
@@ -30,7 +31,7 @@ export default function Book() {
     return (
         <div className="d-flex flex-column min-vh-100">
             <NavigationLayout />
-            <Container className="my-lg-5 py-lg-5">
+            <Container className="py-lg-5">
                 {
                     loading ? <Row>
                         <Col className="d-flex justify-content-center">
@@ -40,8 +41,16 @@ export default function Book() {
                         </Col>
                     </Row>
                         : <Row>
-                            <Col lg={3} className="text-center pb-4">
-                                <Image className="w-75" src={book.image_path} />
+                            <Col lg={5} className="text-center pb-4">
+                                <Carousel data-bs-theme="dark">
+                                    {
+                                        book.image_path?.map(image => {
+                                            return <Carousel.Item>
+                                                <Image className="w-75" src={image} />
+                                            </Carousel.Item>
+                                        })
+                                    }
+                                </Carousel>
                             </Col>
                             <Col>
                                 <div className="d-flex">
@@ -56,7 +65,7 @@ export default function Book() {
                                 <h5 className="py-2">Мiсто: {book.city}</h5>
                                 <h5 className="pb-3">Продавець:</h5>
                                 <div className="d-flex align-items-center">
-                                    {book.image_user && <Image src={book.image_user} className="book__user_image px-3" /> }
+                                    {book.image_user && <Image src={book.image_user} className="book__user_image px-3" />}
                                     <h5>{book.user}</h5>
                                 </div>
                             </Col>

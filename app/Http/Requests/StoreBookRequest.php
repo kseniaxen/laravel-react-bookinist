@@ -19,10 +19,29 @@ class StoreBookRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'title' => 'required|string|max:55',
+            'author' => 'required|string|max:55',
+            'description' => 'nullable|max:1000',
+            'year' => 'nullable|integer|min:1|digits_between: 1,4',
+            'publish' => 'nullable|string|max:55',
+            'price' => 'required|numeric|min:1',
+            'userId' => 'required|exists:users,id',
+            'cityId' => 'required|exists:cities,id',
+            'image_path.*' => 'mimes:jpeg,png,jpg',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => "Обов'язкове поле! Введіть назву книги.",
+            'author.required' => "Обов'язкове поле! Введіть автора книги.",
+            'price.required' => "Обов'язкове поле! Введіть ціну. Формат ціни (00,00)",
+            'cityId.required' => "Обов'язкове поле! Виберіть місто.",
+            'image_path.*.mimes' => "Дозволяються лише зображення jpeg, png і jpg!",
         ];
     }
 }

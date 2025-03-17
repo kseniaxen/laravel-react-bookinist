@@ -11,7 +11,8 @@ import Catalog from './views/Catalog';
 import Book from './views/Book';
 import Contacts from './views/Contacts';
 import About from './views/About';
-import BookForm from './views/BookForm';
+import BookFormAdd from './views/BookFormAdd';
+import BookFormUpdate from './views/BookFormUpdate';
 
 const router = createBrowserRouter([
     {
@@ -40,11 +41,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/books/new',
-        element: <BookForm key="bookCreate" />
+        element: <BookFormAdd key="bookCreate" />
     },
     {
         path: '/books/edit/:id',
-        element: <BookForm key="bookUpdate" />
+        element: <BookFormUpdate key="bookUpdate" />
     },
     {
         path: '/user',

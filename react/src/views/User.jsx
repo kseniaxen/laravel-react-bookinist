@@ -113,6 +113,16 @@ export default function User() {
         setUserUpdate({ ...userUpdate, image: "" });
     }
 
+    const onDeleteClick = book => {
+        if (!window.confirm("Ви точно хочете видалити товар?")) {
+            return
+        }
+        axiosClient.delete(`/books/${book.id}`)
+            .then(() => {
+                getUserBooks();
+            })
+    }
+
     return (
         <Container className="pb-5">
             {
@@ -143,9 +153,6 @@ export default function User() {
                                 <Nav.Item>
                                     <Nav.Link active>Мої товари</Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="link-1">Option 2</Nav.Link>
-                                </Nav.Item>
                             </Nav>
                             <Link to="/books/new">
                                 <Button variant="primary" className="mb-2">
@@ -173,13 +180,13 @@ export default function User() {
                                                 <td>
                                                     <div className="mb-2">
                                                         <Link to={'/books/edit/' + book.id}>
-                                                            <Button variant="warning">
+                                                            <Button variant="warning" className="w-100">
                                                                 Змінити
                                                             </Button>
                                                         </Link>
                                                     </div>
                                                     <div>
-                                                        <Button variant="danger" onClick={ev => onDeleteClick(book)}>Видалити</Button>
+                                                        <Button variant="danger" className="w-100" onClick={ev => onDeleteClick(book)}>Видалити</Button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -205,7 +212,7 @@ export default function User() {
                     <div className="d-flex flex-column">
                         <Image src={userUpdate.image} className="img-fluid"></Image>
                         {
-                            userUpdate.image && <button className="btn btn-danger my-2" onClick={deleteImage}>Удалить картинку</button>
+                            userUpdate.image && <button className="btn btn-danger my-2" onClick={deleteImage}>Видалити картинку</button>
                         }
                     </div>
                     <form onSubmit={onSubmit}>

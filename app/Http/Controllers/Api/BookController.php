@@ -28,14 +28,13 @@ class BookController extends Controller
     {
         $data = $request->validated();
         $strImage = '';
-        if($request->hasFile('image_path')) {
-            foreach ($data['image_path'] as $image){
+        if ($request->hasFile('image_path')) {
+            foreach ($data['image_path'] as $image) {
                 $uniqueName = Str::random(20) . '.' . $image->getClientOriginalExtension();
                 $strImage .= $uniqueName . ',';
                 $image->move(public_path('storage/images'), $uniqueName);
             }
         }
-        $data['image_path'] = $strImage;
         $data['image_path'] = substr($strImage, 0, -1);
         $book = Book::create($data);
 
@@ -64,7 +63,41 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $data = $request->validated();
+
+        $onChange_images = '';
+        $addImages = '';
+
+        $book_Id = DB::table('books')->where('id', $book['id'])->get()->first();
+
+        if ($request->hasFile('image_path')) {
+            foreach ($data['image_path'] as $image) {
+                $uniqueName = Str::random(20) . '.' . $image->getClientOriginalExtension();
+                $addImages .= $uniqueName . ',';
+                $image->move(public_path('storage/images'), $uniqueName);
+            }
+
+            $addImages .= $book_Id->image_path;
+            $data['image_path'] = $addImages;
+        }
+
+        if (!empty($data['images_delete'])) {
+            if(empty($data['image_path'])) {
+                $data['image_path'] = $book_Id->image_path;
+            }
+            $array_images = explode(",", $data['image_path']);
+            foreach ($array_images as $image) {
+                if ($image != $data['images_delete']) {
+                    $onChange_images .= $image . ',';
+                }
+            }
+            $onChange_images = substr($onChange_images, 0, -1);
+            $data['image_path'] = $onChange_images;
+        }
+
+        $book->update($data);
+
+        return response(new BookResource($book), 201);
     }
 
     /**
@@ -72,6 +105,8 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+
+        return response("", 204);
     }
 }

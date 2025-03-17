@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client.js";
+import NavigationLayout from "../components/NavigationLayout.jsx";
+import FooterLayout from "../components/FooterLayout.jsx";
+import { Container, Col, Row, Image, Table, Button } from "react-bootstrap";
 
-import NavigationLayout from "../components/NavigationLayout";
-import FooterLayout from "../components/FooterLayout";
-import { Container, Col, Row, Image, Table } from "react-bootstrap";
-
-export default function BookForm() {
+export default function BookFormUpdate() {
     let { id } = useParams();
+    const navigate = useNavigate();
     const [book, setBook] = useState({})
+    const [image_path, setImage_path] = useState([''])
     const [cities, setCities] = useState([])
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState(null)
@@ -19,22 +20,25 @@ export default function BookForm() {
             axiosClient.get(`/books/${id}`)
                 .then(({ data }) => {
                     setLoading(false);
-                    setBook(data.data);
+                    setBook({
+                        id: data.data.id,
+                        author: data.data.author,
+                        title: data.data.title,
+                        description: data.data.description,
+                        year: data.data.year,
+                        publish: data.data.publish,
+                        price: data.data.price,
+                        userId: data.data.userId,
+                        cityId: data.data.city.id,
+                        _method: 'PUT'
+                    });
+                    setImage_path(data.data.image_path)
                 })
                 .catch(() => {
                     setLoading(false);
                 })
         }, [])
     }
-
-    useEffect(() => {
-        setLoading(true);
-        axiosClient.get('/user')
-            .then(({ data }) => {
-                setLoading(false);
-                setBook({ ...book, userId: data.data.id });
-            })
-    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -51,36 +55,43 @@ export default function BookForm() {
     const addImages = (ev) => {
         const images = ev.currentTarget.files
         const array = Array.from(images);
-        setBook({ ...book, 'image_path[]': array});
+        setBook({ ...book, 'image_path[]': array });
+    }
+
+    const deleteImage = (image) => {
+        const images = image_path.filter((img) => img === image);
+        const path = images[0].split('/');
+        setBook({ ...book, 'images_delete': path[5] })
     }
 
     const onSubmit = (ev) => {
         ev.preventDefault();
+
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
             }
         }
-        if (!id) {
-            axiosClient.post('/books', book, config)
-                .then(() => {
-                    //TODO Navigation to user
-                })
-                .catch(err => {
-                    const response = err.response;
-                    if (response && response.status === 422) {
-                        setErrors(response.data.errors)
-                    }
-                })
-        }
+
+        console.log(book)
+
+        axiosClient.post(`/books/${book.id}`, book, config)
+            .then(() => {
+                //navigate('/user')
+            })
+            .catch(err => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    setErrors(response.data.errors)
+                }
+            })
     }
 
     return (
         <div className="d-flex flex-column min-vh-100">
             <NavigationLayout />
             <Container>
-                {book.id && <h1>Змінити товар</h1>}
-                {!book.id && <h1>Новий товар</h1>}
+                <h1>Змiнити товар</h1>
                 {
                     loading &&
                     <div className="d-flex justify-content-center py-5">
@@ -110,7 +121,8 @@ export default function BookForm() {
                                         <option selected disabled>Виберіть місто</option>
                                         {
                                             cities.map((city) => {
-                                                return <option key={city.id} value={city.id}>{city.name}</option>
+                                                return book.id ? <option selected={book.cityId === city.id ? true : false} key={city.id} value={city.id}>{city.name}</option>
+                                                    : <option key={city.id} value={city.id}>{city.name}</option>
                                             })
                                         }
                                     </select>
@@ -122,36 +134,38 @@ export default function BookForm() {
                             </div>
                             <input type="text" value={book.publish} onChange={ev => setBook({ ...book, publish: ev.target.value })} className="form-control mb-3" placeholder="Видавництво" />
                             <input type="number" min="1" step="0.01" value={book.price} onChange={ev => setBook({ ...book, price: ev.target.value })} className="form-control mb-3" placeholder="Цiна" />
-                            {id ? <Row>
+                            <Row>
                                 <Col>
-                                    <Table bordered>
+                                    <Table bordered responsive="md">
                                         <thead>
                                             <tr>
-                                                <th>№</th>
                                                 <th>Зоображення</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><Image src={book.image_path} className="w-25" /></td>
-                                                <td><button className="btn btn-danger my-2">Удалить картинку</button> </td>
-                                            </tr>
+                                            {
+                                                image_path?.map(image => {
+                                                    return <tr>
+                                                        <td><Image src={image} className="w-25" /></td>
+                                                        <td>{image}</td>
+                                                        <td><Button className="btn-danger my-2" onClick={(ev) => deleteImage(image)}>Видалити зображення</Button> </td>
+                                                    </tr>
+                                                })
+                                            }
                                         </tbody>
                                     </Table>
                                 </Col>
                             </Row>
-                                : <Row>
-                                    <Col>
-                                        <div className="input-group mb-3">
-                                            <input type="file" name='file[]' onChange={ev => addImages(ev)} accept="image/png, image/jpeg, image/png" className="form-control" id="inputGroupFile" multiple />
-                                        </div>
-                                    </Col>
-                                </Row>
-                            }
+                            <Row>
+                                <Col>
+                                    <div className="input-group mb-3">
+                                        <input type="file" name='file[]' onChange={ev => addImages(ev)} accept="image/png, image/jpeg, image/png" className="form-control" id="inputGroupFile" multiple />
+                                    </div>
+                                </Col>
+                            </Row>
                             <button className="btn btn-success mb-1">
-                                {book.id ? 'Зберегти зміни' : 'Додати'}
+                                Змiнити
                             </button>
                         </form>
                     )
@@ -159,5 +173,5 @@ export default function BookForm() {
             </Container>
             <FooterLayout />
         </div>
-    );
+    )
 }

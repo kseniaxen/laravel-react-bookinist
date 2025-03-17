@@ -55,7 +55,7 @@ export default function Catalog() {
                                     <div className="d-flex justify-content-center">
                                         <Card.Img variant="top" className="w-50" src={book.image_path[0]} />
                                     </div>
-                                    <Card.Body className="d-flex flex-column justify-content-between">
+                                    <Card.Body className="d-flex flex-column justify-content-end">
                                         <Card.Title className="d-flex">
                                             <h3 className="price">
                                                 {book.price} ₴

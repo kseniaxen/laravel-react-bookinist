@@ -19,7 +19,7 @@ class StoreBookRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => 'required|string|max:55',
@@ -34,7 +34,7 @@ class StoreBookRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages():array
     {
         return [
             'title.required' => "Обов'язкове поле! Введіть назву книги.",

@@ -22,7 +22,16 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:55',
+            'author' => 'required|string|max:55',
+            'description' => 'nullable|max:1000',
+            'year' => 'nullable|integer|min:1|digits_between: 1,4',
+            'publish' => 'nullable|string|max:55',
+            'price' => 'required|numeric|min:1',
+            'userId' => 'required|exists:users,id',
+            'cityId' => 'required|exists:cities,id',
+            'images_delete' => 'string',
+            'image_path.*' => 'mimes:jpeg,png,jpg'
         ];
     }
 }

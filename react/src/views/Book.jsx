@@ -62,7 +62,7 @@ export default function Book() {
                                 {book.year && <h4 className="title">{book.year} рiк</h4>}
                                 {book.publish && <h4 className="title">{book.publish}</h4>}
                                 <p>{book.description}</p>
-                                <h5 className="py-2">Мiсто: {book.city}</h5>
+                                <h5 className="py-2">Мiсто: {book.city?.name}</h5>
                                 <h5 className="pb-3">Продавець:</h5>
                                 <div className="d-flex align-items-center">
                                     {book.image_user && <Image src={book.image_user} className="book__user_image px-3" />}

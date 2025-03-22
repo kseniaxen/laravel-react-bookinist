@@ -77,7 +77,7 @@ export default function NavigationLayout() {
                             <Col xs="auto" >
                                 <Nav.Link
                                     as={Link}
-                                    to="/user"
+                                    to={ user.role_name === 'ROLE_USER' ? "/user" : "/admin"}
                                     className="d-flex">
                                     <i style={{ color: "black", fontSize: "2rem" }} className="bi bi-person-circle"></i>
                                     {

@@ -127,11 +127,11 @@ export default function User() {
         <Container className="pb-5">
             {
                 loading ?
-                    <div className="d-flex justify-content-center py-5">
+                    <Row className="d-flex justify-content-center py-5">
                         <div class="spinner-border" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                    </div>
+                    </Row>
                     : <Row>
                         <Col lg={3} className="d-flex flex-column">
                             <Image src={user.image ? user.image : NoImage} className="mb-3" />

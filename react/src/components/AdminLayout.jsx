@@ -3,10 +3,10 @@ import { useStateContext } from "../contexts/ContextProvider";
 import NavigationLayout from "./NavigationLayout";
 import FooterLayout from "./FooterLayout";
 
-export default function UserLayout() {
+export default function AdminLayout() {
     const {user, token, setUser, setToken} = useStateContext();
 
-    if(!token && user.role_name === "ROLE_ADMIN"){
+    if(!token){
         return <Navigate to="/login"/>
     }
     

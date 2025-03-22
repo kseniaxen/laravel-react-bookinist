@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axiosClient from "../axios-client.js";
-import NavigationLayout from "../components/NavigationLayout.jsx";
-import FooterLayout from "../components/FooterLayout.jsx";
+import axiosClient from "../../axios-client.js";
+import NavigationLayout from "../../components/NavigationLayout.jsx";
+import FooterLayout from "../../components/FooterLayout.jsx";
 import { Container, Col, Row, Image, Table, Button } from "react-bootstrap";
 
 export default function BookFormUpdate() {
@@ -77,7 +77,7 @@ export default function BookFormUpdate() {
 
         axiosClient.post(`/books/${book.id}`, book, config)
             .then(() => {
-                //navigate('/user')
+                navigate('/user')
             })
             .catch(err => {
                 const response = err.response;

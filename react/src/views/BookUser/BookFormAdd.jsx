@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosClient from "../axios-client.js";
-import NavigationLayout from "../components/NavigationLayout.jsx";
-import FooterLayout from "../components/FooterLayout.jsx";
+import axiosClient from "../../axios-client.js";
+import NavigationLayout from "../../components/NavigationLayout.jsx";
+import FooterLayout from "../../components/FooterLayout.jsx";
 import { Container, Col, Row, Image, Table } from "react-bootstrap";
-export default function BookForm() {
+
+export default function BookFormAdd() {
     const navigate = useNavigate();
     const [book, setBook] = useState({})
     const [cities, setCities] = useState([])

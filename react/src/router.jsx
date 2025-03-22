@@ -3,6 +3,7 @@ import Login from './views/Login';
 import Signup from './views/Signup';
 import User from './views/User';
 import UserLayout from './components/UserLayout';
+import AdminLayout from './components/AdminLayout'
 import NotFound from './views/NotFound';
 import Main from './views/Main';
 import FAQ from './views/FAQ';
@@ -11,8 +12,11 @@ import Catalog from './views/Catalog';
 import Book from './views/Book';
 import Contacts from './views/Contacts';
 import About from './views/About';
-import BookFormAdd from './views/BookFormAdd';
-import BookFormUpdate from './views/BookFormUpdate';
+import BookFormAdd from './views/BookUser/BookFormAdd';
+import BookFormUpdate from './views/BookUser/BookFormUpdate';
+import Admin from './views/Admin';
+import CityFromAdd from './views/CityAdmin/CityFormAdd';
+import CityFromUpdate from './views/CityAdmin/CityFromUpdate';
 
 const router = createBrowserRouter([
     {
@@ -55,6 +59,24 @@ const router = createBrowserRouter([
                 path: '/user',
                 element: <User />
             }
+        ]
+    },
+    {
+        path: '/admin',
+        element: <AdminLayout />,
+        children: [
+            {
+                path: '/admin',
+                element: <Admin />
+            },
+            {
+                path: '/admin/cities/new',
+                element: <CityFromAdd key="cityCreate" />
+            },
+            {
+                path: '/admin/cities/edit/:id',
+                element: <CityFromUpdate key="cityUpdate" />
+            },
         ]
     },
     {

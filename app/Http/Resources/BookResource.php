@@ -30,6 +30,7 @@ class BookResource extends JsonResource
             'userId' => $this->userId,
             'image_user' => DB::table("users")->where('id', $this->userId)->first()->image,
             'city' => DB::table("cities")->where('id', $this->cityId)->first(),
+            'genre' => DB::table("genres")->where('id', $this->genreId)->first(),
             'author' => $this->author,
             'title' => $this->title,
             'description' => $this->description,

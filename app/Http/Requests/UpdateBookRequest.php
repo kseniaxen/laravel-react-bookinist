@@ -30,6 +30,7 @@ class UpdateBookRequest extends FormRequest
             'price' => 'required|numeric|min:1',
             'userId' => 'required|exists:users,id',
             'cityId' => 'required|exists:cities,id',
+            'genreId' => 'required|exists:genres,id',
             'images_delete' => 'string',
             'image_path.*' => 'mimes:jpeg,png,jpg'
         ];

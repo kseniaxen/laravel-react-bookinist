@@ -4,7 +4,7 @@ import axiosClient from "../axios-client.js";
 
 import NavigationLayout from "../components/NavigationLayout";
 import FooterLayout from "../components/FooterLayout";
-import { Container, Row, Col, Image, Carousel } from "react-bootstrap";
+import { Container, Row, Col, Image, Carousel, Badge } from "react-bootstrap";
 
 export default function Book() {
     let { id } = useParams();
@@ -59,6 +59,7 @@ export default function Book() {
                                     </h3>
                                 </div>
                                 <h1 className="title">{book.author}. {book.title}</h1>
+                                <Badge bg="secondary" className="fs-6">{book.genre?.name}</Badge>
                                 {book.year && <h4 className="title">{book.year} рiк</h4>}
                                 {book.publish && <h4 className="title">{book.publish}</h4>}
                                 <p>{book.description}</p>

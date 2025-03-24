@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button, Carousel } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Badge } from "react-bootstrap";
 import NavigationLayout from "../components/NavigationLayout";
 import FooterLayout from "../components/FooterLayout";
 import { useEffect, useState } from "react";
@@ -64,6 +64,7 @@ export default function Catalog() {
                                         <Card.Text className="book__title">
                                             {book.year && <h5 className="title">{book.year} рiк</h5>}
                                             <p className="text-center title fs-5">{book.author}.{book.title}</p>
+                                            <Badge bg="secondary">{book.genre.name}</Badge>
                                         </Card.Text>
                                         <Link className="book__link" to={'/books/' + book.id}>
                                             <Button className="w-100" variant="outline-success">

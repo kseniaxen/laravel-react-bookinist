@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client.js";
-import NavigationLayout from "../../components/NavigationLayout";
-import FooterLayout from "../../components/FooterLayout";
 import { Container } from "react-bootstrap";
 
 export default function CityFormAdd() {

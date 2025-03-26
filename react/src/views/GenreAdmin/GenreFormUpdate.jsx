@@ -3,20 +3,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client.js";
 import { Container } from "react-bootstrap";
 
-export default function CityFormUpdate() {
+export default function GenreFormUpdate() {
     let { id } = useParams();
     const navigate = useNavigate();
-    const [city, setCity] = useState({})
+    const [genre, setGenre] = useState({})
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState(null)
 
     if (id) {
         useEffect(() => {
             setLoading(true);
-            axiosClient.get(`/cities/${id}`)
+            axiosClient.get(`/genres/${id}`)
                 .then(({ data }) => {
                     setLoading(false);
-                    setCity(data.data);
+                    setGenre(data.data);
                 })
                 .catch(() => {
                     setLoading(false);
@@ -27,7 +27,7 @@ export default function CityFormUpdate() {
     const onSubmit = (ev) => {
         ev.preventDefault();
 
-        axiosClient.put(`/cities/${city.id}`, city)
+        axiosClient.put(`/genres/${genre.id}`, genre)
             .then(() => {
                 navigate('/admin')
             })
@@ -41,7 +41,7 @@ export default function CityFormUpdate() {
 
     return (
         <Container>
-            <h1>Змiнити місто</h1>
+            <h1>Змiнити жанр</h1>
             {
                 loading &&
                 <div className="d-flex justify-content-center py-5">
@@ -60,7 +60,7 @@ export default function CityFormUpdate() {
             {
                 !loading && (
                     <form onSubmit={onSubmit} className="pb-5">
-                        <input type="text" value={city.name} onChange={ev => setCity({ ...city, name: ev.target.value })} className="form-control mb-3" placeholder="Назва мiста" />
+                        <input type="text" value={genre.name} onChange={ev => setGenre({ ...genre, name: ev.target.value })} className="form-control mb-3" placeholder="Назва жанра" />
                         <button className="btn btn-success mb-1">
                             Змiнити
                         </button>

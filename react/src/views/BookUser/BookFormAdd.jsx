@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client.js";
 import NavigationLayout from "../../components/NavigationLayout.jsx";
 import FooterLayout from "../../components/FooterLayout.jsx";
-import { Container, Col, Row, Image, Table } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 
 export default function BookFormAdd() {
     const navigate = useNavigate();
     const [book, setBook] = useState({})
     const [cities, setCities] = useState([])
+    const [genres, setGenres] = useState([])
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState(null)
 
@@ -33,6 +34,18 @@ export default function BookFormAdd() {
             })
     }, [])
 
+    useEffect(() => {
+        setLoading(true);
+        axiosClient.get(`/genres`)
+            .then(({ data }) => {
+                setLoading(false);
+                setGenres(data.data);
+            })
+            .catch(() => {
+                setLoading(false);
+            })
+    }, [])
+
     const addImages = (ev) => {
         const images = ev.currentTarget.files
         const array = Array.from(images);
@@ -46,7 +59,7 @@ export default function BookFormAdd() {
                 'content-type': 'multipart/form-data'
             }
         }
-        
+
         axiosClient.post('/books', book, config)
             .then(() => {
                 navigate('/user')
@@ -94,6 +107,16 @@ export default function BookFormAdd() {
                                         {
                                             cities.map((city) => {
                                                 return <option key={city.id} value={city.id}>{city.name}</option>
+                                            })
+                                        }
+                                    </select>
+                                </Col>
+                                <Col>
+                                    <select className="form-select mb-3" onChange={ev => setBook({ ...book, genreId: ev.target.value })}>
+                                        <option selected disabled>Виберіть жанр</option>
+                                        {
+                                            genres.map((genre) => {
+                                                return <option key={genre.id} value={genre.id}>{genre.name}</option>
                                             })
                                         }
                                     </select>

@@ -6,11 +6,13 @@ import { Container, Table, Row, Col, Button } from "react-bootstrap";
 export default function Admin() {
     const [user, setUser] = useState([]);
     const [cities, setCities] = useState([])
+    const [genres, setGenres] = useState([])
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         getUser();
         getCities();
+        getGenres();
     }, [])
 
     const getUser = () => {
@@ -37,6 +39,18 @@ export default function Admin() {
             })
     }
 
+    const getGenres = () => {
+        setLoading(true);
+        axiosClient.get(`/genres`)
+            .then(({ data }) => {
+                setLoading(false);
+                setGenres(data.data);
+            })
+            .catch(() => {
+                setLoading(false);
+            })
+    }
+
     const onDeleteClickCity = city => {
         if (!window.confirm("Ви точно хочете видалити мiсто?")) {
             return
@@ -44,6 +58,16 @@ export default function Admin() {
         axiosClient.delete(`/cities/${city.id}`)
             .then(() => {
                 getCities();
+            })
+    }
+
+    const onDeleteClickGenre = genre => {
+        if (!window.confirm("Ви точно хочете видалити жанр?")) {
+            return
+        }
+        axiosClient.delete(`/genres/${genre.id}`)
+            .then(() => {
+                getGenres();
             })
     }
 
@@ -56,7 +80,7 @@ export default function Admin() {
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
-                    : <Row>
+                    : <Row className="d-inline">
                         <Col>
                             <h1>Мiста</h1>
                             <Link to="/admin/cities/new">
@@ -92,6 +116,49 @@ export default function Admin() {
                                                     </div>
                                                     <div>
                                                         <Button variant="danger" className="w-100" onClick={ev => onDeleteClickCity(city)}>Видалити</Button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        </Col>
+                        <Col>
+                            <h1>Жанри</h1>
+                            <Link to="/admin/genres/new">
+                                <Button variant="primary" className="mb-2">
+                                    Новий жанр
+                                </Button>
+                            </Link>
+                            <Table bordered hover responsive="md">
+                                <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Жанр</th>
+                                        <th>Дія</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        genres.map(genre => {
+                                            return <tr>
+                                                <td>
+                                                    {genre.id}
+                                                </td>
+                                                <td>
+                                                    {genre.name}
+                                                </td>
+                                                <td>
+                                                    <div className="mb-2">
+                                                        <Link to={'/admin/genres/edit/' + genre.id}>
+                                                            <Button variant="warning" className="w-100">
+                                                                Змінити
+                                                            </Button>
+                                                        </Link>
+                                                    </div>
+                                                    <div>
+                                                        <Button variant="danger" className="w-100" onClick={ev => onDeleteClickGenre(genre)}>Видалити</Button>
                                                     </div>
                                                 </td>
                                             </tr>

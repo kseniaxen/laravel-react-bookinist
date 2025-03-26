@@ -11,6 +11,7 @@ export default function BookFormUpdate() {
     const [book, setBook] = useState({})
     const [image_path, setImage_path] = useState([''])
     const [cities, setCities] = useState([])
+    const [genres, setGenres] = useState([])
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState(null)
 
@@ -30,6 +31,7 @@ export default function BookFormUpdate() {
                         price: data.data.price,
                         userId: data.data.userId,
                         cityId: data.data.city.id,
+                        genreId: data.data.genre.id,
                         _method: 'PUT'
                     });
                     setImage_path(data.data.image_path)
@@ -46,6 +48,18 @@ export default function BookFormUpdate() {
             .then(({ data }) => {
                 setLoading(false);
                 setCities(data.data);
+            })
+            .catch(() => {
+                setLoading(false);
+            })
+    }, [])
+
+    useEffect(() => {
+        setLoading(true);
+        axiosClient.get(`/genres`)
+            .then(({ data }) => {
+                setLoading(false);
+                setGenres(data.data);
             })
             .catch(() => {
                 setLoading(false);
@@ -123,6 +137,17 @@ export default function BookFormUpdate() {
                                             cities.map((city) => {
                                                 return book.id ? <option selected={book.cityId === city.id ? true : false} key={city.id} value={city.id}>{city.name}</option>
                                                     : <option key={city.id} value={city.id}>{city.name}</option>
+                                            })
+                                        }
+                                    </select>
+                                </Col>
+                                <Col>
+                                    <select className="form-select mb-3" onChange={ev => setBook({ ...book, genreId: ev.target.value })}>
+                                        <option selected disabled>Виберіть жанр</option>
+                                        {
+                                            genres.map((genre) => {
+                                                return book.id ? <option selected={book.genreId === genre.id ? true : false} key={genre.id} value={genre.id}>{genre.name}</option>
+                                                    : <option key={genre.id} value={genre.id}>{genre.name}</option>
                                             })
                                         }
                                     </select>

@@ -1,33 +1,18 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client.js";
-import { Container } from "react-bootstrap";
+import { Container} from "react-bootstrap";
 
-export default function CityFormUpdate() {
-    let { id } = useParams();
+export default function GenreFormAdd() {
     const navigate = useNavigate();
-    const [city, setCity] = useState({})
+    const [genre, setGenre] = useState([])
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState(null)
-
-    if (id) {
-        useEffect(() => {
-            setLoading(true);
-            axiosClient.get(`/cities/${id}`)
-                .then(({ data }) => {
-                    setLoading(false);
-                    setCity(data.data);
-                })
-                .catch(() => {
-                    setLoading(false);
-                })
-        }, [])
-    }
 
     const onSubmit = (ev) => {
         ev.preventDefault();
 
-        axiosClient.put(`/cities/${city.id}`, city)
+        axiosClient.post('/genres', genre)
             .then(() => {
                 navigate('/admin')
             })
@@ -41,7 +26,7 @@ export default function CityFormUpdate() {
 
     return (
         <Container>
-            <h1>Змiнити місто</h1>
+            <h1>Новий жанр</h1>
             {
                 loading &&
                 <div className="d-flex justify-content-center py-5">
@@ -60,13 +45,14 @@ export default function CityFormUpdate() {
             {
                 !loading && (
                     <form onSubmit={onSubmit} className="pb-5">
-                        <input type="text" value={city.name} onChange={ev => setCity({ ...city, name: ev.target.value })} className="form-control mb-3" placeholder="Назва мiста" />
+                        <input type="text" value={genre.title} onChange={ev => setGenre({ ...genre, name: ev.target.value })} className="form-control mb-3" placeholder="Назва жанра" />
                         <button className="btn btn-success mb-1">
-                            Змiнити
+                            Додати
                         </button>
                     </form>
                 )
             }
         </Container>
     );
+
 }

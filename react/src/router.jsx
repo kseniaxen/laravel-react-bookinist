@@ -17,6 +17,8 @@ import BookFormUpdate from './views/BookUser/BookFormUpdate';
 import Admin from './views/Admin';
 import CityFromAdd from './views/CityAdmin/CityFormAdd';
 import CityFromUpdate from './views/CityAdmin/CityFromUpdate';
+import GenreFormAdd from './views/GenreAdmin/GenreFormAdd';
+import GenreFormUpdate from './views/GenreAdmin/GenreFormUpdate';
 
 const router = createBrowserRouter([
     {
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
             {
                 path: '/admin/cities/edit/:id',
                 element: <CityFromUpdate key="cityUpdate" />
+            },
+            {
+                path: '/admin/genres/new',
+                element: <GenreFormAdd key="genreCreate" />
+            },
+            {
+                path: '/admin/genres/edit/:id',
+                element: <GenreFormUpdate key="genreUpdate" />
             },
         ]
     },

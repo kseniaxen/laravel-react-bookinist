@@ -154,7 +154,7 @@ export default function User() {
                                     <Nav.Link active>Мої товари</Nav.Link>
                                 </Nav.Item>
                             </Nav>
-                            <Link to="/books/new">
+                            <Link to="/user/books/new">
                                 <Button variant="primary" className="mb-2">
                                     Новий товар
                                 </Button>
@@ -179,7 +179,7 @@ export default function User() {
                                                 <td>{book.price}</td>
                                                 <td>
                                                     <div className="mb-2">
-                                                        <Link to={'/books/edit/' + book.id}>
+                                                        <Link to={'/user/books/edit/' + book.id}>
                                                             <Button variant="warning" className="w-100">
                                                                 Змінити
                                                             </Button>

@@ -1,4 +1,5 @@
 import { Row, Col, Container, Nav, Image } from "react-bootstrap";
+import { useStateContext } from "../contexts/ContextProvider";
 import { Link } from "react-router-dom";
 import logoImg from "../assets/img/logo.png";
 import partner1 from "../assets/img/partner1.png";
@@ -7,6 +8,8 @@ import partner3 from "../assets/img/partner3.png";
 import partner4 from "../assets/img/partner4.png";
 
 export default function FooterLayout() {
+    const { token } = useStateContext()
+
     return (
         <Container fluid className="color-back-green mt-auto">
             <Container className="py-lg-5 py-3">
@@ -26,7 +29,7 @@ export default function FooterLayout() {
                             </Nav.Link>
                             <Nav.Link
                                 className="p-0 my-2 text-black text-center text-md-start fs-5"
-                                href="/user">
+                                href={token ? "/user": "/login"}>
                                 Кабiнет
                             </Nav.Link>
                         </Nav>

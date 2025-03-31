@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import axiosClient from "../axios-client.js";
+import { cartAdd } from "../cart-storage.js";
 
 import NoImage from "../assets/img/temp_book.jpg";
 
@@ -30,6 +31,10 @@ export default function Catalog() {
             .catch(() => {
                 setLoading(false)
             })
+    }
+
+    const onAddToCart = (id) => {
+        cartAdd(id);
     }
 
     return (
@@ -66,11 +71,18 @@ export default function Catalog() {
                                             <p className="text-center title fs-5">{book.author}.{book.title}</p>
                                             <Badge bg="secondary">{book.genre.name}</Badge>
                                         </Card.Text>
-                                        <Link className="book__link" to={'/books/' + book.id}>
-                                            <Button className="w-100" variant="outline-success">
-                                                Переглянути
-                                            </Button>
-                                        </Link>
+                                        <div className="d-flex justify-content-between">
+                                            <Link className="book__link" to={'/books/' + book.id}>
+                                                <Button className="w-100" variant="outline-success">
+                                                    Переглянути
+                                                </Button>
+                                            </Link>
+                                            <div className="book__link">
+                                                <Button className="w-100 book__link" variant="outline-success" onClick={ev => onAddToCart(book.id)}>
+                                                    <i class="bi bi-basket2-fill"></i> До кошика
+                                                </Button>
+                                            </div>
+                                        </div>
                                     </Card.Body>
                                 </Card>
                             </Col>

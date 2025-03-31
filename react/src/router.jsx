@@ -19,6 +19,7 @@ import CityFromAdd from './views/CityAdmin/CityFormAdd';
 import CityFromUpdate from './views/CityAdmin/CityFromUpdate';
 import GenreFormAdd from './views/GenreAdmin/GenreFormAdd';
 import GenreFormUpdate from './views/GenreAdmin/GenreFormUpdate';
+import Cart from './views/Cart';
 
 const router = createBrowserRouter([
     {
@@ -46,12 +47,8 @@ const router = createBrowserRouter([
         element: <Book />
     },
     {
-        path: '/books/new',
-        element: <BookFormAdd key="bookCreate" />
-    },
-    {
-        path: '/books/edit/:id',
-        element: <BookFormUpdate key="bookUpdate" />
+        path: '/cart',
+        element: <Cart />
     },
     {
         path: '/user',
@@ -60,7 +57,15 @@ const router = createBrowserRouter([
             {
                 path: '/user',
                 element: <User />
-            }
+            },
+            {
+                path: '/user/books/new',
+                element: <BookFormAdd key="bookCreate" />
+            },
+            {
+                path: '/user/books/edit/:id',
+                element: <BookFormUpdate key="bookUpdate" />
+            },
         ]
     },
     {

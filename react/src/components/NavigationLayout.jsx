@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav, Row, Col, Image } from "react-bootstrap";
+import { Navbar, Container, Nav, Row, Col, Image, Badge } from "react-bootstrap";
 import { useStateContext } from "../contexts/ContextProvider";
 import logoImg from "../assets/img/logo.png";
-import axiosClient from "../axios-client";
+import axiosClient from "../axios-client.js";
+import { useCartCount } from '../hooks/useCartCount';
 
 export default function NavigationLayout() {
     const { user, token, setUser, setToken } = useStateContext();
     const [loading, setLoading] = useState(false);
+    const cartCount = useCartCount();
 
     const onLogout = (e) => {
         e.preventDefault();
@@ -28,6 +30,7 @@ export default function NavigationLayout() {
                 })
         }
     }, []);
+
 
     return (
         <Navbar expand="lg" bg="white" data-bs-theme="white">
@@ -72,12 +75,20 @@ export default function NavigationLayout() {
                         </Nav.Link>
                         {!token ? <Nav.Link className="fw-normal" as={Link} to="/login"> Вхiд </Nav.Link> : <Nav.Link className="fw-normal" as={Link} href="#" onClick={onLogout}>Вихiд</Nav.Link>}
                     </Nav>
-                    {token &&
-                        <Row>
+                    <Row>
+                        <Col xs="auto">
+                            <Nav.Link
+                                as={Link}
+                                to={'/cart'}>
+                                <i style={{ color: "black", fontSize: "2rem" }} className="bi bi-cart"></i>
+                                <Badge pill className="cart-number" bg="success">{cartCount !== 0 ? cartCount : ''}</Badge>
+                            </Nav.Link>
+                        </Col>
+                        {token &&
                             <Col xs="auto" >
                                 <Nav.Link
                                     as={Link}
-                                    to={ user.role_name === 'ROLE_USER' ? "/user" : "/admin"}
+                                    to={user.role_name === 'ROLE_USER' ? "/user" : "/admin"}
                                     className="d-flex">
                                     <i style={{ color: "black", fontSize: "2rem" }} className="bi bi-person-circle"></i>
                                     {
@@ -90,8 +101,8 @@ export default function NavigationLayout() {
                                     }
                                 </Nav.Link>
                             </Col>
-                        </Row>
-                    }
+                        }
+                    </Row>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

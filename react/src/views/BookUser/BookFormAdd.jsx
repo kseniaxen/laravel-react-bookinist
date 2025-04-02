@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client.js";
-import NavigationLayout from "../../components/NavigationLayout.jsx";
-import FooterLayout from "../../components/FooterLayout.jsx";
 import { Container, Col, Row } from "react-bootstrap";
 
 export default function BookFormAdd() {

@@ -1,9 +1,55 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosClient from "../axios-client";
 import NavigationLayout from "../components/NavigationLayout";
 import FooterLayout from "../components/FooterLayout";
-import { Container, Row, Col, Button, Table } from "react-bootstrap";
+import { Container, Row, Col, Button, Table, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { deleteFromCart, getCart, getAmountCart } from "../cart-storage.js";
+import { useCartCount } from '../hooks/useCartCount';
 
 export default function Cart() {
+    const navigate = useNavigate();
+    const [books, setBooks] = useState([]);
+    const [price, setPrice] = useState();
+    const [loading, setLoading] = useState(false);
+    const cartCount = useCartCount();
+
+    useEffect(() => {
+        getBooks();
+    }, [])
+
+    if(cartCount === 0) {
+        navigate('/catalog')
+    }
+
+    const priceFull = (array) => array.reduce((sum, item) => sum + Number(item.price), 0).toFixed(2);
+
+    useEffect(() => {
+        getBooks();
+        setPrice(priceFull(books));
+    }, [cartCount]);
+
+    const getBooks = () => {
+        let stringArray = getCart().join();
+        const data = {
+            id: stringArray
+        };
+        setLoading(true);
+        axiosClient.post(`/cart`, data)
+            .then(({ data }) => {
+                setLoading(false)
+                setBooks(data.data)
+                setPrice(priceFull(data.data));
+            })
+            .catch(() => {
+                setLoading(false)
+            })
+    }
+
+    const onDeleteFromCart = (id) => {
+        deleteFromCart(id)
+    }
 
     return (
         <div className="d-flex flex-column min-vh-100">
@@ -16,12 +62,24 @@ export default function Cart() {
                             <h4 className="bg-cart bg-cart-title">Доступні для замовлення</h4>
                             <Table>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
+                                    {
+                                        books.map(book => {
+                                            return <tr className="d-flex">
+                                                <td className="col-3">
+                                                    <div>
+                                                        <Image className="w-25" src={book.image_path[0]} />
+                                                    </div>
+                                                </td>
+                                                <td className="col-5 d-flex justify-content-between align-items-center">{book.title}</td>
+                                                <td className="col-2 d-flex justify-content-between align-items-center">{book.price} грн</td>
+                                                <td className="col-2 d-flex justify-content-between align-items-center">
+                                                    <Button className="" variant="success" onClick={ev => onDeleteFromCart(book.id)}>
+                                                        <i className="bi bi-trash"></i>
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        })
+                                    }
                                 </tbody>
                             </Table>
                         </div>
@@ -38,16 +96,15 @@ export default function Cart() {
                                 Ваш кошик
                             </h4>
                             <div className="d-flex justify-content-between my-2">
-                                <p className="fw-normal m-0">Товар (1)</p>
-                                <p className="fw-bold m-0">1000 грн</p>
+                                <p className="fw-normal m-0">Товар ({getAmountCart()})</p>
+                                <p className="fw-bold m-0">{price}</p>
                             </div>
-                            <hr/>
+                            <hr />
                             <div className="d-flex justify-content-between my-2">
                                 <h5 className="fw-bold m-0">До оплати</h5>
-                                <p className="fw-bold m-0 fs-5 cart-price">1000 грн</p>
+                                <p className="fw-bold m-0 fs-5 cart-price">{price} грн</p>
                             </div>
                         </div>
-
                     </Col>
                 </Row>
             </Container>

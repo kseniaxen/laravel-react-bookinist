@@ -19,3 +19,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::apiResource('/cities', CityController::class);
 Route::apiResource('/genres', GenreContoller::class);
 Route::apiResource('/books', BookController::class);
+
+Route::post('/cart', [BookController::class, 'cart']);

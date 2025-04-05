@@ -85,7 +85,7 @@ export default function Cart() {
                         </div>
                     </Col>
                     <Col>
-                        <Link className="book__link" to={''}>
+                        <Link className="book__link" to={'/purchase'}>
                             <Button className="w-100 cart-button" variant="success">
                                 Перейти до оформлення
                             </Button>

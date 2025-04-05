@@ -20,6 +20,7 @@ import CityFromUpdate from './views/CityAdmin/CityFromUpdate';
 import GenreFormAdd from './views/GenreAdmin/GenreFormAdd';
 import GenreFormUpdate from './views/GenreAdmin/GenreFormUpdate';
 import Cart from './views/Cart';
+import Purchase from './views/Purchase';
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
     {
         path: '/cart',
         element: <Cart />
+    },
+    {
+        path: '/purchase',
+        element: <Purchase />
     },
     {
         path: '/user',

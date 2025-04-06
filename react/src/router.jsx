@@ -21,6 +21,10 @@ import GenreFormAdd from './views/GenreAdmin/GenreFormAdd';
 import GenreFormUpdate from './views/GenreAdmin/GenreFormUpdate';
 import Cart from './views/Cart';
 import Purchase from './views/Purchase';
+import PaymentFormUpdate from './views/PaymentAdmin/PaymentFormUpdate';
+import PaymentFormAdd from './views/PaymentAdmin/PaymentFormAdd';
+import StatusFormUpdate from './views/StatusAdmin/StatusFormUpdate';
+import StatusFormAdd from './views/StatusAdmin/StatusFormAdd';
 
 const router = createBrowserRouter([
     {
@@ -97,6 +101,22 @@ const router = createBrowserRouter([
                 path: '/admin/genres/edit/:id',
                 element: <GenreFormUpdate key="genreUpdate" />
             },
+            {
+                path: '/admin/payments/new',
+                element: <PaymentFormAdd key="paymentCreate" />
+            },
+            {
+                path: '/admin/payments/edit/:id',
+                element: <PaymentFormUpdate key="paymentUpdate" />
+            },
+            {
+                path: '/admin/statuses/new',
+                element: <StatusFormAdd key="statusCreate" />
+            },
+            {
+                path: '/admin/statuses/edit/:id',
+                element: <StatusFormUpdate key="statusUpdate" />
+            }
         ]
     },
     {

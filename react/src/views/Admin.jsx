@@ -5,14 +5,18 @@ import { Container, Table, Row, Col, Button } from "react-bootstrap";
 
 export default function Admin() {
     const [user, setUser] = useState([]);
-    const [cities, setCities] = useState([])
-    const [genres, setGenres] = useState([])
+    const [cities, setCities] = useState([]);
+    const [genres, setGenres] = useState([]);
+    const [payments, setPayments] = useState([]);
+    const [statuses, setStatuses] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         getUser();
         getCities();
         getGenres();
+        getPayments();
+        getStatuses();
     }, [])
 
     const getUser = () => {
@@ -51,6 +55,30 @@ export default function Admin() {
             })
     }
 
+    const getPayments = () => {
+        setLoading(true);
+        axiosClient.get(`/payments`)
+            .then(({ data }) => {
+                setLoading(false);
+                setPayments(data.data);
+            })
+            .catch(() => {
+                setLoading(false);
+            })
+    }
+
+    const getStatuses = () => {
+        setLoading(true);
+        axiosClient.get(`/statuses`)
+            .then(({ data }) => {
+                setLoading(false);
+                setStatuses(data.data);
+            })
+            .catch(() => {
+                setLoading(false);
+            })
+    }
+
     const onDeleteClickCity = city => {
         if (!window.confirm("Ви точно хочете видалити мiсто?")) {
             return
@@ -68,6 +96,26 @@ export default function Admin() {
         axiosClient.delete(`/genres/${genre.id}`)
             .then(() => {
                 getGenres();
+            })
+    }
+
+    const onDeleteClickPayment = payment => {
+        if (!window.confirm("Ви точно хочете видалити спосiб оплати?")) {
+            return
+        }
+        axiosClient.delete(`/payments/${payment.id}`)
+            .then(() => {
+                getPayments();
+            })
+    }
+
+    const onDeleteClickStatus = status => {
+        if (!window.confirm("Ви точно хочете видалити статус замовлення?")) {
+            return
+        }
+        axiosClient.delete(`/statuses/${status.id}`)
+            .then(() => {
+                getStatuses();
             })
     }
 
@@ -131,34 +179,122 @@ export default function Admin() {
                                     Новий жанр
                                 </Button>
                             </Link>
+                            <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                                <Table bordered hover responsive="md">
+                                    <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Жанр</th>
+                                            <th>Дія</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            genres.map(genre => {
+                                                return <tr>
+                                                    <td>
+                                                        {genre.id}
+                                                    </td>
+                                                    <td>
+                                                        {genre.name}
+                                                    </td>
+                                                    <td>
+                                                        <div className="mb-2">
+                                                            <Link to={'/admin/genres/edit/' + genre.id}>
+                                                                <Button variant="warning" className="w-100">
+                                                                    Змінити
+                                                                </Button>
+                                                            </Link>
+                                                        </div>
+                                                        <div>
+                                                            <Button variant="danger" className="w-100" onClick={ev => onDeleteClickGenre(genre)}>Видалити</Button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+                                </Table>
+                            </div>
+                        </Col>
+                        <Col>
+                            <h1>Вибір оплати</h1>
+                            <Link to="/admin/payments/new">
+                                <Button variant="primary" className="mb-2">
+                                    Новий вибiр оплати
+                                </Button>
+                            </Link>
                             <Table bordered hover responsive="md">
                                 <thead>
                                     <tr>
                                         <th>№</th>
-                                        <th>Жанр</th>
+                                        <th>Вибір оплати</th>
                                         <th>Дія</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        genres.map(genre => {
+                                        payments.map(payment => {
                                             return <tr>
                                                 <td>
-                                                    {genre.id}
+                                                    {payment.id}
                                                 </td>
                                                 <td>
-                                                    {genre.name}
+                                                    {payment.name}
                                                 </td>
                                                 <td>
                                                     <div className="mb-2">
-                                                        <Link to={'/admin/genres/edit/' + genre.id}>
+                                                        <Link to={'/admin/payments/edit/' + payment.id}>
                                                             <Button variant="warning" className="w-100">
                                                                 Змінити
                                                             </Button>
                                                         </Link>
                                                     </div>
                                                     <div>
-                                                        <Button variant="danger" className="w-100" onClick={ev => onDeleteClickGenre(genre)}>Видалити</Button>
+                                                        <Button variant="danger" className="w-100" onClick={ev => onDeleteClickPayment(payment)}>Видалити</Button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        </Col>
+                        <Col>
+                            <h1>Статус замовлення</h1>
+                            <Link to="/admin/statuses/new">
+                                <Button variant="primary" className="mb-2">
+                                    Новий cтатус замовлення
+                                </Button>
+                            </Link>
+                            <Table bordered hover responsive="md">
+                                <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Статус замовлення</th>
+                                        <th>Дія</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        statuses.map(status => {
+                                            return <tr>
+                                                <td>
+                                                    {status.id}
+                                                </td>
+                                                <td>
+                                                    {status.name}
+                                                </td>
+                                                <td>
+                                                    <div className="mb-2">
+                                                        <Link to={'/admin/statuses/edit/' + status.id}>
+                                                            <Button variant="warning" className="w-100">
+                                                                Змінити
+                                                            </Button>
+                                                        </Link>
+                                                    </div>
+                                                    <div>
+                                                        <Button variant="danger" className="w-100" onClick={ev => onDeleteClickStatus(status)}>Видалити</Button>
                                                     </div>
                                                 </td>
                                             </tr>

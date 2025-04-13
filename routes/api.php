@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\GenreContoller;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -23,5 +24,6 @@ Route::apiResource('/genres', GenreContoller::class);
 Route::apiResource('/payments', PaymentController::class);
 Route::apiResource('/statuses', StatusController::class);
 Route::apiResource('/books', BookController::class);
+Route::apiResource('/orders', OrderController::class);
 
 Route::post('/cart', [BookController::class, 'cart']);

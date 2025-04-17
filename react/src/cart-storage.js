@@ -31,3 +31,7 @@ export function deleteFromCart(idItem) {
     localStorage.setItem('cart', JSON.stringify(newArray));
     window.dispatchEvent(new Event('cartUpdated'));
 }
+
+export function deleteAllFromCart() {
+    localStorage.removeItem('cart');
+}

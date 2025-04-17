@@ -15,6 +15,8 @@ import About from './views/About';
 import BookFormAdd from './views/BookUser/BookFormAdd';
 import BookFormUpdate from './views/BookUser/BookFormUpdate';
 import Admin from './views/Admin';
+import AdminSettings from './views/AdminViews/AdminSettings';
+import AdminOrders from './views/AdminViews/AdminOrders';
 import CityFromAdd from './views/CityAdmin/CityFormAdd';
 import CityFromUpdate from './views/CityAdmin/CityFromUpdate';
 import GenreFormAdd from './views/GenreAdmin/GenreFormAdd';
@@ -84,6 +86,14 @@ const router = createBrowserRouter([
             {
                 path: '/admin',
                 element: <Admin />
+            },
+            {
+                path: '/admin/orders',
+                element: <AdminOrders />
+            },
+            {
+                path: '/admin/settings',
+                element: <AdminSettings />
             },
             {
                 path: '/admin/cities/new',

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePaymentRequest extends FormRequest
+class StoreStatusBookRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,8 @@ class UpdatePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:55'
+            'id' => $this->id,
+            'name' => $this->name
         ];
     }
 }

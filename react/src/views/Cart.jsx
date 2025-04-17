@@ -19,7 +19,7 @@ export default function Cart() {
         getBooks();
     }, [])
 
-    if(cartCount === 0) {
+    if(cartCount === 0 || getCart() === null) {
         navigate('/catalog')
     }
 
@@ -31,7 +31,7 @@ export default function Cart() {
     }, [cartCount]);
 
     const getBooks = () => {
-        let stringArray = getCart().join();
+        let stringArray = getCart()?.join();
         const data = {
             id: stringArray
         };

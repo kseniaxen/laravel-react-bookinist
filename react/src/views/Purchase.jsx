@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import InputMask from 'react-input-mask';
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import NavigationLayout from "../components/NavigationLayout";
 import FooterLayout from "../components/FooterLayout";
 import axiosClient from "../axios-client";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import { useStateContext } from "../contexts/ContextProvider";
-import { getCart, getAmountCart } from "../cart-storage.js";
+import { getCart, getAmountCart, deleteAllFromCart } from "../cart-storage.js";
 
 export default function Purchase() {
     const { user, token, setUser, setToken } = useStateContext();
@@ -19,6 +19,7 @@ export default function Purchase() {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState(null);
     const [errors, setErrors] = useState(null)
+    const navigate = useNavigate();
 
     if (!token) {
         return <Navigate to="/login" />
@@ -75,8 +76,9 @@ export default function Purchase() {
             'price': price
         }
         axiosClient.post(`/orders`, order)
-            .then((data) => {
-
+            .then(() => {
+                navigate('/');
+                deleteAllFromCart();
             })
             .catch(err => {
                 const response = err.response

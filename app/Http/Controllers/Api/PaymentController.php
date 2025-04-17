@@ -10,17 +10,11 @@ use App\Http\Resources\PaymentResource;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return PaymentResource::collection(Payment::query()->orderBy('id')->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePaymentRequest $request)
     {
         $data = $request->validated();
@@ -29,17 +23,11 @@ class PaymentController extends Controller
         return response(new PaymentResource($payment) , 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Payment $payment)
     {
         return new PaymentResource($payment);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePaymentRequest $request, Payment $payment)
     {
         $data = $request->validated();
@@ -48,9 +36,6 @@ class PaymentController extends Controller
         return new PaymentResource($payment);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Payment $payment)
     {
         $payment->delete();

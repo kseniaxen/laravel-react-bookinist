@@ -10,17 +10,11 @@ use App\Http\Resources\StatusResource;
 
 class StatusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return StatusResource::collection(Status::query()->orderBy('id')->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreStatusRequest $request)
     {
         $data = $request->validated();
@@ -29,17 +23,11 @@ class StatusController extends Controller
         return response(new StatusResource($status) , 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Status $status)
     {
         return new StatusResource($status);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateStatusRequest $request, Status $status)
     {
         $data = $request->validated();
@@ -48,9 +36,6 @@ class StatusController extends Controller
         return new StatusResource($status);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Status $status)
     {
         $status->delete();

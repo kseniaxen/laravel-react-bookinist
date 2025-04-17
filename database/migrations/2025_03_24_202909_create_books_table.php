@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('userId');
             $table->unsignedBigInteger('cityId');
             $table->unsignedBigInteger('genreId');
+            $table->unsignedBigInteger('statusId');
             $table->string('author');
             $table->string('title');
             $table->longText('description')->nullable();
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('cityId')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('genreId')->references('id')->on('genres')->onDelete('cascade');
+            $table->foreign('statusId')->references('id')->on('status_books')->onDelete('cascade');
         });
     }
 

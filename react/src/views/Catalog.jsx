@@ -54,7 +54,8 @@ export default function Catalog() {
                     </div>
                 </div> :
                     <Row xs={1} md={2} lg={4}>
-                        {books.map(book => {
+                        {books
+                        .map(book => {
                             return <Col className="pb-5">
                                 <Card className="book h-100">
                                     <div className="d-flex justify-content-center">
@@ -106,6 +107,6 @@ export default function Catalog() {
                 </Row>
             </Container>
             <FooterLayout />
-        </div>
+        </div >
     );
 }

@@ -12,14 +12,23 @@ use App\Http\Requests\CartBookRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+enum BookStatus: int
+{
+    case ON_SALE = 1;
+    case SOLD_OUT = 2;
+}
+
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return BookResource::collection(Book::query()->orderBy('id', 'desc')->paginate(8));
+        return BookResource::collection(
+            Book::query()
+                ->where('statusId', 1) 
+                ->orderBy('id', 'desc')
+                ->paginate(8)
+        );
     }
 
     public function cart(CartBookRequest $request)
@@ -30,9 +39,6 @@ class BookController extends Controller
         return BookResource::collection($books);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreBookRequest $request)
     {
         $data = $request->validated();
@@ -45,31 +51,23 @@ class BookController extends Controller
             }
         }
         $data['image_path'] = substr($strImage, 0, -1);
+        $data['statusId'] = BookStatus::ON_SALE->value;
         $book = Book::create($data);
 
         return response(new BookResource($book), 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Book $book)
     {
         return new BookResource($book);
     }
 
-    /**
-     * Display a listing of the resource auth user.
-     */
     public function auth()
     {
         $books = DB::table('books')->where('userId', Auth::user()->id)->orderBy('id', 'desc')->get();
         return BookResource::collection($books);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateBookRequest $request, Book $book)
     {
         $data = $request->validated();
@@ -109,9 +107,6 @@ class BookController extends Controller
         return response(new BookResource($book), 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Book $book)
     {
         $book->delete();

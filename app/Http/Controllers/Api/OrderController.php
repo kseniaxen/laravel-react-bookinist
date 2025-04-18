@@ -21,13 +21,11 @@ class OrderController extends Controller
 
     public function index()
     {
-        
+        return OrderResource::collection(Order::query()->orderBy('id')->get());
     }
 
     public function store(StoreOrderRequest $request)
     {
-        $STORE_ORDER = 1;
-
         $data = $request->validated();
 
         $arrayBookOrder = $data['books_order'];
